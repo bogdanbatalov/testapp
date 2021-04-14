@@ -16,14 +16,16 @@ export default new Vuex.Store({
   actions: {
     addCharacters({ commit }, params) {
       return new Promise((resolve, reject) => {
-        getCharactersApi(params).then((response) => {
-          if (response.status === 200) {
-            commit("ADD_CHARACTERS", response.data.results);
-            resolve(response.data.info);
-          } else {
-            reject(response);
-          }
-        });
+        getCharactersApi(params)
+          .then((response) => {
+            if (response.status === 200) {
+              commit("ADD_CHARACTERS", response.data.results);
+              resolve(response.data.info);
+            }
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
     },
   },

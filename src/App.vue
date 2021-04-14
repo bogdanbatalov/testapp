@@ -94,11 +94,15 @@ export default {
     ...mapActions(["addCharacters"]),
     addCharactersHandler($state) {
       if (!this.info || this.info.next) {
-        this.addCharacters({ page: this.page }).then((data) => {
-          this.info = data;
-          this.page++;
-          $state.loaded();
-        });
+        this.addCharacters({ page: this.page })
+          .then((data) => {
+            this.info = data;
+            this.page++;
+            $state.loaded();
+          })
+          .catch(() => {
+            $state.complete();
+          });
       } else {
         $state.complete();
       }
